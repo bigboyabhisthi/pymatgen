@@ -563,7 +563,7 @@ class Vasprun(MSONable):
         ionic step
         """
         final_esteps = self.ionic_steps[-1]["electronic_steps"]
-        if 'IBRION' in v.incar and (v.incar['IBRION'] == 7 or v.incar['IBRION'] == 8):
+        if 'IBRION' in self.incar and (self.incar['IBRION'] in [7,8]):
             i = 1
             to_check = set(['e_wo_entrp', 'e_fr_energy', 'e_0_energy'])
             while set(final_esteps[i].keys()) == to_check:
