@@ -194,7 +194,7 @@ class BalancedReaction(MSONable):
         return self.normalized_repr_and_factor()[0]
 
     def __eq__(self, other):
-        if other is None:
+        if not isinstance(other, self) :
             return False
         for comp in self._all_comp:
             coeff2 = other.get_coeff(comp) if comp in other._all_comp else 0
