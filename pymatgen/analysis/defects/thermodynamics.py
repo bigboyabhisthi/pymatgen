@@ -13,6 +13,9 @@ from pymatgen.electronic_structure.dos import FermiDos
 from pymatgen.analysis.defects.core import DefectEntry
 from pymatgen.analysis.structure_matcher import PointDefectComparator
 
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
 __author__ = "Danny Broberg, Shyam Dwaraknath"
 __copyright__ = "Copyright 2018, The Materials Project"
 __version__ = "1.0"
@@ -116,7 +119,7 @@ class DefectPhaseDiagram(MSONable):
         """
         Sets the stable charges and transition states for a series of
         defect entries. This function uses scipy's HalfspaceInterection
-        to oncstruct the polygons corresponding to defect stability as
+        to construct the polygons corresponding to defect stability as
         a function of the Fermi-level. The Halfspace Intersection
         constructs N-dimensional hyperplanes, in this case N=2,  based
         on the equation of defect formation energy with considering chemical
@@ -171,6 +174,8 @@ class DefectPhaseDiagram(MSONable):
         # Grouping by defect types
         for defects, index_list in similar_defects( self.entries):
             defects = list(defects)
+            for defect in defects:
+                print(defect.name)
 
             # prepping coefficient matrix for half-space intersection
             # [-Q, 1, -1*(E_form+Q*VBM)] -> -Q*E_fermi+E+-1*(E_form+Q*VBM) <= 0  where E_fermi and E are the variables in the hyperplanes
@@ -376,7 +381,7 @@ class DefectPhaseDiagram(MSONable):
                     # consider if transition level is within
                     # tolerance of band edges
                     suggest_bigger_supercell = True
-                    for tl, chgset in self.transition_level_map[def_type].items():
+                    for tl, chgset in self.transition_level_map.items():
                         sorted_chgset = list(chgset)
                         sorted_chgset.sort(reverse=True)
                         if charge == sorted_chgset[0] and tl < tolerance:
@@ -455,6 +460,8 @@ class DefectPhaseDiagram(MSONable):
 
         return bisect(_get_total_q, -1., self.band_gap + 1.)
 
+        return
+
     def get_dopability_limits(self, chemical_potentials):
         """
         Find Dopability limits for a given chemical potential.
@@ -528,8 +535,6 @@ class DefectPhaseDiagram(MSONable):
             a matplotlib object
 
         """
-        import matplotlib.pyplot as plt
-        import matplotlib.cm as cm
         if xlim is None:
             xlim = (-0.5, self.band_gap+0.5)
         xy = {}
@@ -665,6 +670,6 @@ class DefectPhaseDiagram(MSONable):
             plt.title("{}".format(title), size=ax_fontsize*width)
 
         if saved:
-            plt.savefig(str(title) + ".pdf")
+            plt.savefig(str(title) + "FreyplnravgPlot.pdf")
         else:
             return plt

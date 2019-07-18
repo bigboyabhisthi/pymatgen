@@ -8,6 +8,7 @@ from pymatgen.core import PeriodicSite, Structure
 from pymatgen.analysis.defects.corrections import FreysoldtCorrection, \
     KumagaiCorrection, BandFillingCorrection, BandEdgeShiftingCorrection
 from pymatgen.analysis.defects.core import Vacancy
+from pprint import pprint
 
 """
 This module implements DefectCompatibility analysis for consideration of
@@ -235,6 +236,7 @@ class DefectCompatibility(MSONable):
         run_bandfilling = True if len( set(defect_entry.parameters.keys()).intersection(required_bandfilling_params)) \
                                 == len(required_bandfilling_params) else False
         if run_bandfilling:
+            #pprint(defect_entry.parameters)
             if (defect_entry.parameters['vbm'] == None) or (defect_entry.parameters['cbm'] == None) \
                     or (defect_entry.parameters['potalign'] == None):
                 run_bandfilling = False

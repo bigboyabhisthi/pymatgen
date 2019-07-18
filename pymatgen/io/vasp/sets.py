@@ -1888,7 +1888,7 @@ class MVLScanRelaxSet(MPRelaxSet):
     Appropriately Normed (SCAN) semilocal density functional.
     """
 
-    def __init__(self, structure, potcar_functional="PBE_52", **kwargs):
+    def __init__(self, structure, potcar_functional="PBE_52", use_hubbard=False, **kwargs):
         """
         Notes:
             1. This functional is only available from VASP.5.4.3 upwards.
@@ -1921,9 +1921,10 @@ class MVLScanRelaxSet(MPRelaxSet):
                                            "EDIFF": 1e-05,
                                            "EDIFFG": -0.05,
                                            "LASPH": True,
-                                           "LDAU": False,
+                                           "LDAU": use_hubbard,
                                            "METAGGA": "SCAN",
                                            "NELM": 200})
+        self._use_hubbard = use_hubbard
 
 
 def get_vasprun_outcar(path, parse_dos=True, parse_eigen=True):
