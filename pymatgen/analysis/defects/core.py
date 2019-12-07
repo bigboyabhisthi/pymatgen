@@ -322,11 +322,7 @@ class Interstitial(Defect):
         Args:
             supercell (int, [3x1], or [[]] (3x3)): supercell integer, vector, or scaling matrix
         """
-        defect_structure = Structure(self.bulk_structure.copy().lattice,
-                                     [site.specie for site in self.bulk_structure],
-                                     [site.frac_coords for site in self.bulk_structure],
-                                     to_unit_cell=True, coords_are_cartesian=False,
-                                     site_properties=None)  # remove all site_properties
+        defect_structure = self.bulk_structure.copy()
         defect_structure.make_supercell(supercell)
 
         # create a trivial defect structure to find where supercell transformation moves the defect site
@@ -338,7 +334,7 @@ class Interstitial(Defect):
         defect_site = struct_for_defect_site[0]
 
         defect_structure.append(self.site.specie.symbol, defect_site.coords, coords_are_cartesian=True,
-                                properties=None)
+                                properties={'magmom': 0})
         defect_structure.set_charge(self.charge)
         return defect_structure
 
