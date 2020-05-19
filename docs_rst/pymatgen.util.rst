@@ -15,6 +15,7 @@ Submodules
    pymatgen.util.convergence
    pymatgen.util.coord
    pymatgen.util.coord_cython
+   pymatgen.util.coord_cython
    pymatgen.util.io_utils
    pymatgen.util.num
    pymatgen.util.plotting
@@ -29,6 +30,6 @@ Module contents
 ---------------
 
 .. automodule:: pymatgen.util
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
